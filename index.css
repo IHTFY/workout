@@ -2,3 +2,10 @@
 body {
   font-family: sans-serif;
 }
+
+#chartContainer {
+  display: block;
+  overflow: auto;
+  margin-right: auto;
+  margin-left: auto;
+}
