@@ -1,5 +1,14 @@
+//localStorage.database = '{"start":"2021-1-19","situp":[30,0,0,0],"squat":[30,5,5,0],"pushup":[20,0,0,0],"plank":[60,0,0,0],"pullup":[0,0,0,0]}'
+
+M.AutoInit();
+
+document.getElementById('deleteButton').addEventListener('click', ()=> {
+  window.localStorage.clear();
+  window.location.reload();
+});
+
 // Show the Current Date
-document.getElementById('currentDate').textContent = new Date().toDateString();
+document.getElementById('currentDate').textContent = `Today is ${new Date().toDateString()}`;
 
 const DATE = new Date();
 const today = [DATE.getFullYear(), DATE.getMonth() + 1, DATE.getDate()].join('-');
@@ -16,6 +25,8 @@ let database = localStorage.getItem('database')
     "pullup": []
   };
 
+// Show Start Date
+document.getElementById('startDate').textContent = `Started on ${new Date(database.start).toDateString()}`;
 
 // ms to days (calulate the difference in UTC)
 const daysSince = ((new Date(today)) - (new Date(database.start))) / 86400000;
@@ -30,24 +41,23 @@ for (let key in database) {
       // Set current day to zero if it doesn't exist
       element[daysSince] = 0;
       // Fill in the missing days with zeros
-      element = fillZero(element);
+      elements = fillZero(element);
     }
   }
 }
 
 // Set some color constants
 const colors = {
-  red: "rgb(255, 99, 132)",
-  orange: "rgb(255, 159, 64)",
-  yellow: "rgb(255, 205, 86)",
-  green: "rgb(75, 192, 192)",
-  blue: "rgb(54, 162, 235)",
-  purple: "rgb(153, 102, 255)",
-  grey: "rgb(201, 203, 207)",
+  red: "#ff6384",
+  orange: "#ff9f40",
+  yellow: "#ffcd56",
+  green: "#4bc0c0",
+  blue: "#36a2eb",
+  purple: "#9966ff",
+  grey: "#c9cbcf",
 };
 
-// HACK
-const transparent = color => color.slice(0, -1) + ',0.5)';
+const transparent = color => color + '80';
 
 function generateData(count) {
   let data = [];
@@ -103,7 +113,7 @@ const options = {
   spanGaps: false,
   elements: {
     line: {
-      tension: 0.3
+      tension: 0
     }
   },
   scales: {

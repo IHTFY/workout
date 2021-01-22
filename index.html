@@ -7,13 +7,41 @@
     <link rel="stylesheet" type="text/css" href="styles.css" />
     <title>Workout</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@latest/dist/Chart.min.js"></script>
-    <script defer type="module" src="script.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script defer src="script.js"></script>
   </head>
   <body>
-    <h1 id="currentDate"></h1>
-    <div id="chartContainer">
-      <canvas id="myChart" width="600" height="600"></canvas>
+    <div class="container">
+      <div class="section">
+        <p id="startDate"></p>
+        <p id="currentDate"></p>
+      </div>
+      <div id="chartContainer">
+        <canvas id="myChart" width="600" height="600"></canvas>
+      </div>
+      <a class="red-text waves-effect waves-light btn-flat modal-trigger" href="#destroy"
+        >Delete Database</a
+      >
+      <div id="destroy" class="modal">
+        <div class="modal-content">
+          <h4>Delete All Data?</h4>
+          <p>Are you sure you want to permenently delete all of your data?</p>
+        </div>
+        <div class="modal-footer">
+          <a class="pulse green lighten-2 white-text modal-close waves-effect waves-light btn-flat"
+            >Cancel</a
+          >
+          <a
+            id="deleteButton"
+            class="red-text modal-close waves-effect btn-flat"
+            >Delete</a
+          >
+        </div>
+      </div>
     </div>
-
   </body>
 </html>
