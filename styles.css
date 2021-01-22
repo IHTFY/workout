@@ -2,6 +2,11 @@
 body {
   font-family: sans-serif;
 }
+
+#dbText {
+  white-space: pre;
+}
+
 /* 
 #chartContainer {
   width: 75%;
