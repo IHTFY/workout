@@ -4,6 +4,7 @@ body {
 }
 
 #chartContainer {
+  width: 75%;
   display: block;
   overflow: auto;
   margin-right: auto;
