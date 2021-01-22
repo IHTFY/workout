@@ -1,4 +1,6 @@
-import Chart from 'chart.js';
+
+// import Chart from 'chart.js';
+// using CDN bc simpler
 
 const presets = {
   blue: "rgb(54, 162, 235)",
