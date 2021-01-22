@@ -149,13 +149,13 @@ const chart = new Chart('myChart', {
   options: options
 });
 
-// Update data
-function syncData(chart) {
-  chart.data.datasets.forEach(dataset => {
-    dataset.data = database[dataset.id];
-  });
-  chart.update();
-}
+// // Update data
+// function syncData(chart) {
+//   chart.data.datasets.forEach(dataset => {
+//     dataset.data = database[dataset.id];
+//   });
+//   chart.update();
+// }
 
 document.getElementById('deleteButton').addEventListener('click', () => {
   window.localStorage.clear();
@@ -165,7 +165,8 @@ document.getElementById('deleteButton').addEventListener('click', () => {
 document.getElementById('saveDB').addEventListener('click', () => {
   database = JSON.parse(document.getElementById('dbText').textContent);
   window.localStorage.setItem('database', JSON.stringify(database));
-  syncData(chart);
+  // syncData(chart);
+  window.location.reload();
 });
 
 // Save Data
