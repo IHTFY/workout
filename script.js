@@ -1,8 +1,4 @@
-
-// import Chart from 'chart.js';
-// using CDN bc simpler
-
-const presets = {
+const colors = {
   blue: "rgb(54, 162, 235)",
   green: "rgb(75, 192, 192)",
   grey: "rgb(201, 203, 207)",
@@ -14,78 +10,57 @@ const presets = {
 
 const transparent = color => color.slice(0, -1) + ',0.5)';
 
-const inputs = {
-  min: 20,
-  max: 80,
-  count: 8,
-  decimals: 2,
-  continuity: 1
-};
-
-function generateData(config) {
-  var cfg = config || {};
-  var min = cfg.min || 0;
-  var max = cfg.max || 1;
-  var from = cfg.from || [];
-  var count = cfg.count || 8;
-  var decimals = cfg.decimals || 8;
-  var continuity = cfg.continuity || 1;
-  var dfactor = Math.pow(10, decimals) || 0;
-  var data = [];
-  var i, value;
-
-  for (i = 0; i < count; ++i) {
-    value = (from[i] || 0) + min + Math.random() * (max - min + 1);
-    if (Math.random() <= continuity) {
-      data.push(Math.round(dfactor * value) / dfactor);
-    } else {
-      data.push(null);
-    }
+function generateData(count) {
+  let data = [];
+  for (let i = 0; i < count; ++i) {
+    let value = Math.random() * (40 + 1);
+    data.push(Math.round(value));
   }
-
   return data;
 }
 
 function generateLabels() {
-  let values = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'];
+  const values = [...Array(30).keys()];
+  // let values = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'];
   return values;
 }
 
 var data = {
   labels: generateLabels(),
   datasets: [{
-    backgroundColor: transparent(presets.red),
-    borderColor: presets.red,
-    data: generateData(),
+    backgroundColor: transparent(colors.red),
+    borderColor: colors.red,
+    data: generateData(30),
     hidden: false,
-    label: 'Situp'
+    label: 'Situps',
+    fill: 'origin'
   }, {
-    backgroundColor: transparent(presets.orange),
-    borderColor: presets.orange,
-    data: generateData(),
+    backgroundColor: transparent(colors.orange),
+    borderColor: colors.orange,
+    data: generateData(30),
     hidden: false,
-    label: 'Squat',
+    label: 'Squats',
     fill: '-1'
   }, {
-    backgroundColor: transparent(presets.yellow),
-    borderColor: presets.yellow,
-    data: generateData(),
+    backgroundColor: transparent(colors.yellow),
+    borderColor: colors.yellow,
+    data: generateData(30),
     hidden: false,
-    label: 'Pushup',
+    label: 'Pushups',
     fill: '-1'
   }, {
-    backgroundColor: transparent(presets.green),
-    borderColor: presets.green,
-    data: generateData(),
+    backgroundColor: transparent(colors.green),
+    borderColor: colors.green,
+    data: generateData(30),
     hidden: false,
-    label: 'Plank',
+    label: 'Plank (s)',
     fill: '-1'
   }, {
-    backgroundColor: transparent(presets.blue),
-    borderColor: presets.blue,
-    data: generateData(),
+    backgroundColor: transparent(colors.blue),
+    borderColor: colors.blue,
+    data: generateData(30),
     hidden: false,
-    label: 'Pullup',
+    label: 'Pullups',
     fill: '-1'
   }]
 };
@@ -95,18 +70,29 @@ var options = {
   spanGaps: false,
   elements: {
     line: {
-      tension: 0.000001
+      tension: 0.3
     }
   },
   scales: {
     yAxes: [{
-      stacked: true
-    }]
+      stacked: true,
+      scaleLabel: {
+        display: true,
+        labelString: 'Points'
+      }
+    }],
+    xAxes: [
+      {
+        scaleLabel: {
+          display: true,
+          labelString: 'Day'
+        }
+      }
+    ]
   },
-  plugins: {
-    filler: {
-      propagate: true
-    }
+  title: {
+    display: true,
+    text: 'Points per Day'
   }
 };
 
