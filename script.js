@@ -2,11 +2,6 @@
 
 M.AutoInit();
 
-document.getElementById('deleteButton').addEventListener('click', ()=> {
-  window.localStorage.clear();
-  window.location.reload();
-});
-
 // Show the Current Date
 document.getElementById('currentDate').textContent = `Today is ${new Date().toDateString()}`;
 
@@ -14,8 +9,8 @@ const DATE = new Date();
 const today = [DATE.getFullYear(), DATE.getMonth() + 1, DATE.getDate()].join('-');
 
 // Check for stored data on page
-let database = localStorage.getItem('database')
-  ? JSON.parse(localStorage.getItem('database'))
+let database = window.localStorage.getItem('database')
+  ? JSON.parse(window.localStorage.getItem('database'))
   : {
     "start": today,
     "situp": [],
@@ -46,6 +41,9 @@ for (let key in database) {
   }
 }
 
+// set database text in edit section
+document.getElementById('dbText').textContent = JSON.stringify(database, null, 2);
+
 // Set some color constants
 const colors = {
   red: "#ff6384",
@@ -59,15 +57,6 @@ const colors = {
 
 const transparent = color => color + '80';
 
-function generateData(count) {
-  let data = [];
-  for (let i = 0; i < count; ++i) {
-    let value = Math.random() * (40 + 1);
-    data.push(Math.round(value));
-  }
-  return data;
-}
-
 const lines = {
   labels: Array.from({ length: 1 + daysSince }, (_, i) => i + 1),
   datasets: [{
@@ -75,6 +64,7 @@ const lines = {
     borderColor: colors.red,
     data: database.situp,
     hidden: false,
+    id: 'situp',
     label: 'Situps',
     fill: 'origin'
   }, {
@@ -82,6 +72,7 @@ const lines = {
     borderColor: colors.orange,
     data: database.squat,
     hidden: false,
+    id: 'squat',
     label: 'Squats',
     fill: '-1'
   }, {
@@ -89,6 +80,7 @@ const lines = {
     borderColor: colors.yellow,
     data: database.pushup,
     hidden: false,
+    id: 'pushup',
     label: 'Pushups',
     fill: '-1'
   }, {
@@ -96,6 +88,7 @@ const lines = {
     borderColor: colors.green,
     data: database.plank,
     hidden: false,
+    id: 'plank',
     label: 'Plank (s)',
     fill: '-1'
   }, {
@@ -103,6 +96,7 @@ const lines = {
     borderColor: colors.blue,
     data: database.pullup,
     hidden: false,
+    id: 'pullup',
     label: 'Pullups',
     fill: '-1'
   }]
@@ -148,11 +142,31 @@ const options = {
   }
 };
 
+// Draw Chart
 const chart = new Chart('myChart', {
   type: 'line',
   data: lines,
   options: options
 });
 
+// Update data
+function syncData(chart) {
+  chart.data.datasets.forEach(dataset => {
+    dataset.data = database[dataset.id];
+  });
+  chart.update();
+}
+
+document.getElementById('deleteButton').addEventListener('click', () => {
+  window.localStorage.clear();
+  window.location.reload();
+});
+
+document.getElementById('saveDB').addEventListener('click', () => {
+  database = JSON.parse(document.getElementById('dbText').textContent);
+  window.localStorage.setItem('database', JSON.stringify(database));
+  syncData(chart);
+});
+
 // Save Data
-localStorage.setItem('database', JSON.stringify(database));
+window.localStorage.setItem('database', JSON.stringify(database));

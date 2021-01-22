@@ -23,22 +23,45 @@
       <div id="chartContainer">
         <canvas id="myChart" width="600" height="600"></canvas>
       </div>
-      <a class="red-text waves-effect waves-light btn-flat modal-trigger" href="#destroy"
-        >Delete Database</a
+      <a class="waves-effect waves-light btn-flat modal-trigger" href="#edit"
+        >Edit Database</a
       >
+      <div id="edit" class="modal">
+        <div class="modal-content">
+          <h4>Edit Database</h4>
+          <div contenteditable id="dbText"></div>
+        </div>
+        <div class="modal-footer">
+          <a
+            class="left red-text waves-effect waves-light btn-flat modal-trigger"
+            href="#destroy"
+            >Delete Database</a
+          >
+
+          <a
+            id="saveDB"
+            class="green lighten-2 white-text modal-close waves-effect waves-light btn-flat"
+            >Save</a
+          >
+          <a class="lighten-2 modal-close waves-effect waves-light btn-flat"
+            >Cancel</a
+          >
+        </div>
+      </div>
       <div id="destroy" class="modal">
         <div class="modal-content">
           <h4>Delete All Data?</h4>
           <p>Are you sure you want to permenently delete all of your data?</p>
         </div>
         <div class="modal-footer">
-          <a class="pulse green lighten-2 white-text modal-close waves-effect waves-light btn-flat"
-            >Cancel</a
-          >
           <a
             id="deleteButton"
-            class="red-text modal-close waves-effect btn-flat"
+            class="left red-text modal-close waves-effect btn-flat"
             >Delete</a
+          >
+          <a
+            class="green lighten-2 white-text modal-close waves-effect waves-light btn-flat"
+            >Cancel</a
           >
         </div>
       </div>
