@@ -16,114 +16,108 @@
   </head>
   <body>
     <div class="container">
-      <div class="section">
-        <p id="startDate"></p>
-        <p id="currentDate"></p>
+      <div class="section center-align">
+        <div class="row">
+          <div class="col s6">
+            <p id="startDate"></p>
+          </div>
+          <div class="col s6">
+            <p id="currentDate"></p>
+          </div>
+        </div>
       </div>
 
-      <div id="chartContainer">
-        <canvas id="myChart" width="600" height="600"></canvas>
+      <div class="section row">
+        <div class="col s12">
+          <div id="chartContainer" class="center-align">
+            <canvas id="myChart" width="600" height="600"></canvas>
+          </div>
+        </div>
       </div>
 
-      <div class="section">
-        <div class="row center-align">
-          <div class="col s2 offset-s1">
-            <div class="row">
-              <div class="col s12">
-                <a class="waves-effect waves-light btn-small red accent-2"
-                  >+5</a
-                >
-              </div>
-            </div>
-            <div class="row">
-              <div class="col s12">Situps</div>
-            </div>
-            <div class="row">
-              <div class="col s12">
-                <a class="waves-effect waves-light btn-small red accent-2"
-                  >-1</a
-                >
-              </div>
+      <div class="section row center-align">
+        <div class="col s2 offset-s1">
+          <div class="row">
+            <div class="col s12">
+              <a class="adjuster waves-effect waves-light btn red accent-2">+5</a>
             </div>
           </div>
-          <div class="col s2">
-            <div class="row">
-              <div class="col s12">
-                <a class="waves-effect waves-light btn-small orange accent-2"
-                  >+5</a
-                >
-              </div>
-            </div>
-            <div class="row">
-              <div class="col s12">Squats</div>
-            </div>
-            <div class="row">
-              <div class="col s12">
-                <a class="waves-effect waves-light btn-small orange accent-2"
-                  >-1</a
-                >
-              </div>
+          <div class="row">
+            <div class="col s12">Situps</div>
+          </div>
+          <div class="row">
+            <div class="col s12">
+              <a class="adjuster waves-effect waves-light btn red accent-2">-1</a>
             </div>
           </div>
-          <div class="col s2">
-            <div class="row">
-              <div class="col s12">
-                <a class="black-text waves-effect btn-small yellow lighten-1"
-                  >+5</a
-                >
-              </div>
-            </div>
-            <div class="row">
-              <div class="col s12">Pushups</div>
-            </div>
-            <div class="row">
-              <div class="col s12">
-                <a class="black-text waves-effect btn-small yellow lighten-1"
-                  >-1</a
-                >
-              </div>
+        </div>
+        <div class="col s2">
+          <div class="row">
+            <div class="col s12">
+              <a class="adjuster waves-effect waves-light btn orange accent-2">+5</a>
             </div>
           </div>
-          <div class="col s2">
-            <div class="row">
-              <div class="col s12">
-                <a class="waves-effect btn-small teal lighten-2">+5</a>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col s12">Plank (s)</div>
-            </div>
-            <div class="row">
-              <div class="col s12">
-                <a class="waves-effect btn-small teal lighten-2">-1</a>
-              </div>
+          <div class="row">
+            <div class="col s12">Squats</div>
+          </div>
+          <div class="row">
+            <div class="col s12">
+              <a class="adjuster waves-effect waves-light btn orange accent-2">-1</a>
             </div>
           </div>
-          <div class="col s2">
-            <div class="row">
-              <div class="col s12">
-                <a
-                  class="waves-effect waves-light btn-small light-blue lighten-1"
-                  >+5</a
-                >
-              </div>
+        </div>
+        <div class="col s2">
+          <div class="row">
+            <div class="col s12">
+              <a class="adjuster black-text waves-effect btn yellow lighten-1">+5</a>
             </div>
-            <div class="row">
-              <div class="col s12">Pullups</div>
+          </div>
+          <div class="row">
+            <div class="col s12">Pushups</div>
+          </div>
+          <div class="row">
+            <div class="col s12">
+              <a class="adjuster black-text waves-effect btn yellow lighten-1">-1</a>
             </div>
-            <div class="row">
-              <div class="col s12">
-                <a
-                  class="waves-effect waves-light btn-small light-blue lighten-1"
-                  >-1</a
-                >
-              </div>
+          </div>
+        </div>
+        <div class="col s2">
+          <div class="row">
+            <div class="col s12">
+              <a class="adjuster waves-effect waves-light btn teal lighten-2">+5</a>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12">Plank (s)</div>
+          </div>
+          <div class="row">
+            <div class="col s12">
+              <a class="adjuster waves-effect waves-light btn teal lighten-2">-1</a>
+            </div>
+          </div>
+        </div>
+        <div class="col s2">
+          <div class="row">
+            <div class="col s12">
+              <a class="adjuster waves-effect waves-light btn light-blue lighten-1"
+                >+5</a
+              >
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12">Pullups</div>
+          </div>
+          <div class="row">
+            <div class="col s12">
+              <a class="adjuster waves-effect waves-light btn light-blue lighten-1"
+                >-1</a
+              >
             </div>
           </div>
         </div>
       </div>
 
-      <div class="section">
+      <div class="section row">
         <a class="waves-effect waves-light btn-flat modal-trigger" href="#edit"
           >Edit Database</a
         >
