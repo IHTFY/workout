@@ -170,5 +170,37 @@ document.getElementById('saveDB').addEventListener('click', () => {
   window.location.reload();
 });
 
+// assign function to the 10 adjustment buttons
+[...document.getElementsByClassName('adjuster')].forEach(b => {
+  // Situps/Squats, etc.
+  let label = b.parentElement.parentElement.parentElement.querySelector(':nth-child(2)').firstElementChild.textContent;
+  // change to match the dataset label
+  label = {
+    'Situps': 'situp',
+    'Squats': 'squat',
+    'Pushups': 'pushup',
+    'Plank (s)': 'plank',
+    'Pullups': 'pullup',
+  }[label];
+
+  // '+5' or '-1'
+  const val = b.textContent;
+
+  // update database variable
+  b.addEventListener('click', () => {
+    database[label].push(database[label].pop() + parseInt(val));
+
+    // dave database updates to localStorage
+    saveData();
+
+    //TODO use/manipulate chart data, then save that to localstorage? Utilize chart.update() vs location.reload()
+    // adjust chart data directly
+    chart.data.datasets.find(ds=>ds.id===label).data = database[label];
+    chart.update();
+  });
+});
+
 // Save Data
-window.localStorage.setItem('database', JSON.stringify(database));
+function saveData() {
+  window.localStorage.setItem('database', JSON.stringify(database));
+}
