@@ -1,5 +1,6 @@
 //localStorage.database = '{"start":"2021-1-19","situp":[30,0,0,0],"squat":[30,5,5,0],"pushup":[20,0,0,0],"plank":[60,0,0,0],"pullup":[0,0,0,0]}'
 
+// Initialize materialize CSS
 M.AutoInit();
 
 // Show the Current Date
@@ -46,17 +47,17 @@ document.getElementById('dbText').textContent = JSON.stringify(database, null, 2
 
 // Set some color constants
 const colors = {
-  red: "#ff6384",
-  orange: "#ff9f40",
-  yellow: "#ffcd56",
-  green: "#4bc0c0",
-  blue: "#36a2eb",
-  purple: "#9966ff",
-  grey: "#c9cbcf",
+  red: "#ff5252",
+  orange: "#ffab40",
+  yellow: "#ffee58",
+  green: "#4db6ac",
+  blue: "#29b6f6"
 };
 
+// Make a color 50% transparent
 const transparent = color => color + '80';
 
+// Format database into chartjs datasets
 const lines = {
   labels: Array.from({ length: 1 + daysSince }, (_, i) => i + 1),
   datasets: [{
