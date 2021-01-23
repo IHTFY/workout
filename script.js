@@ -24,10 +24,10 @@ let database = window.localStorage.getItem('database')
 document.getElementById('startDate').textContent = `Started on ${new Date(database.start).toDateString()}`;
 
 // ms to days (calulate the difference in UTC)
-const daysSince = ((new Date(today)) - (new Date(database.start))) / 86400000;
+const daysSince = Math.floor(((new Date(today)) - (new Date(database.start))) / 86400000);
 
 // A function that fills empty/undefined array elements with zeros
-const fillZero = arr => [...arr].map(el => el || 0);
+const fillZero = arr => [...arr].map(el => el ?? 0);
 
 for (let key in database) {
   let element = database[key];
@@ -36,7 +36,7 @@ for (let key in database) {
       // Set current day to zero if it doesn't exist
       element[daysSince] = 0;
       // Fill in the missing days with zeros
-      elements = fillZero(element);
+      database[key] = fillZero(element);
     }
   }
 }
