@@ -50,12 +50,13 @@ function updateTotal(db) {
 
   // Show total points
   document.getElementById('totalDisplay').textContent = total;
+
+  // Update editable dbText
+  document.getElementById('dbText').textContent = JSON.stringify(database, null, 2);
+
 }
 
 updateTotal(database);
-
-// set database text in edit section
-document.getElementById('dbText').textContent = JSON.stringify(database, null, 2);
 
 // Set some color constants
 const colors = {
@@ -181,7 +182,6 @@ document.getElementById('deleteButton').addEventListener('click', () => {
 document.getElementById('saveDB').addEventListener('click', () => {
   database = JSON.parse(document.getElementById('dbText').textContent);
   window.localStorage.setItem('database', JSON.stringify(database));
-  // syncData(chart);
   window.location.reload();
 });
 
