@@ -56,6 +56,7 @@ function updateTotal(db) {
 
 }
 
+// Run once to initialize editable dbText
 updateTotal(database);
 
 // Set some color constants
@@ -175,22 +176,18 @@ const chart = new Chart('myChart', {
   options: options
 });
 
-
+// Handle Delete Database button
 document.getElementById('deleteButton').addEventListener('click', () => {
   window.localStorage.clear();
   window.location.reload();
 });
 
+// Handle Save Database button
 document.getElementById('saveDB').addEventListener('click', () => {
   database = JSON.parse(document.getElementById('dbText').textContent);
   window.localStorage.setItem('database', JSON.stringify(database));
   window.location.reload();
 });
-
-// Save Data to localStorage
-function saveData(db) {
-  window.localStorage.setItem('database', JSON.stringify(db));
-}
 
 // assign function to the 10 adjustment buttons
 [...document.getElementsByClassName('adjuster')].forEach(b => {
@@ -210,11 +207,12 @@ function saveData(db) {
 
   // update database variable
   b.addEventListener('click', () => {
+    // change database object value
     database[label].push(database[label].pop() + parseInt(val));
     updateTotal(database);
 
     // save database updates to localStorage
-    saveData(database);
+    window.localStorage.setItem('database', JSON.stringify(database));
 
     // adjust chart data directly
     chart.data.datasets.find(ds => ds.id === label).data = database[label];
