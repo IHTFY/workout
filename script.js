@@ -148,6 +148,16 @@ const options = {
     display: true,
     text: 'Points per Day'
   },
+  tooltips: {
+    callbacks: {
+      title: function (tooltipItems, data) {
+        return 'Day ' + data.labels[tooltipItems[0].index];
+      },
+      afterBody: function (tooltipItems, data) {
+        return 'Total ' + data.datasets.reduce((a, c) => a + c.data[tooltipItems[0].index], 0);
+      }
+    }
+  },
   legend: {
     labels: {
       usePointStyle: true
