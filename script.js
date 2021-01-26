@@ -155,7 +155,7 @@ const options = {
         return 'Day ' + data.labels[tooltipItems[0].index];
       },
       afterBody: function (tooltipItems, data) {
-        return 'Total ' + data.datasets.reduce((a, c) => a + c.data[tooltipItems[0].index], 0);
+        return 'Total: ' + data.datasets.reduce((a, c) => a + c.data[tooltipItems[0].index], 0);
       }
     }
   },
