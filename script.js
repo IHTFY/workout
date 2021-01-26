@@ -4,7 +4,7 @@
 M.AutoInit();
 
 // Show the Current Date
-document.getElementById('currentDate').textContent = `Today is ${new Date().toDateString()}`;
+document.getElementById('currentDate').textContent = `Today is ${new Date().toLocaleDateString()}`;
 
 const DATE = new Date();
 const today = [DATE.getFullYear(), DATE.getMonth() + 1, DATE.getDate()].join('-');
@@ -22,7 +22,7 @@ let database = window.localStorage.getItem('database')
   };
 
 // Show Start Date
-document.getElementById('startDate').textContent = `Started on ${new Date(database.start).toDateString()}`;
+document.getElementById('startDate').textContent = `Started on ${new Date(database.start).toLocaleDateString()}`;
 
 // ms to days (calulate the difference in UTC)
 const daysSince = Math.floor(((new Date(today)) - (new Date(database.start))) / 86400000);
