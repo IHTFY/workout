@@ -60,11 +60,12 @@ updateTotal(database);
 
 // Set some color constants
 const colors = {
-  red: "#ff5252",
-  orange: "#ffab40",
-  yellow: "#ffee58",
-  green: "#4db6ac",
-  blue: "#29b6f6"
+  // taken from https://materializecss.com/color.html
+  red: "#ff5252", // red accent-2
+  orange: "#ffab40", // orange accent-2
+  yellow: "#ffee58", // yellow lighten-1
+  green: "#4db6ac", // teal lighten-2
+  blue: "#29b6f6" // light-blue lighten-1
 };
 
 // Make a color 50% transparent
@@ -72,6 +73,7 @@ const transparent = color => color + '80';
 
 // Format database into chartjs datasets
 const lines = {
+  // [1,2,3,...]
   labels: Array.from({ length: 1 + daysSince }, (_, i) => i + 1),
   datasets: [{
     backgroundColor: transparent(colors.red),
@@ -185,9 +187,14 @@ document.getElementById('saveDB').addEventListener('click', () => {
   window.location.reload();
 });
 
+// Save Data to localStorage
+function saveData(db) {
+  window.localStorage.setItem('database', JSON.stringify(db));
+}
+
 // assign function to the 10 adjustment buttons
 [...document.getElementsByClassName('adjuster')].forEach(b => {
-  // Situps/Squats, etc.
+  // "Situps","Squats", etc.
   let label = b.parentElement.parentElement.parentElement.children[1].children[0].textContent;
   // change to match the dataset label
   label = {
@@ -209,14 +216,8 @@ document.getElementById('saveDB').addEventListener('click', () => {
     // save database updates to localStorage
     saveData(database);
 
-
     // adjust chart data directly
     chart.data.datasets.find(ds => ds.id === label).data = database[label];
     chart.update();
   });
 });
-
-// Save Data
-function saveData(db) {
-  window.localStorage.setItem('database', JSON.stringify(db));
-}
