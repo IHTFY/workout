@@ -27,9 +27,11 @@ document.getElementById('startDate').textContent = `Started on ${new Date(databa
 // ms to days (calulate the difference in UTC)
 const daysSince = Math.floor(((new Date(today)) - (new Date(database.start))) / 86400000);
 
+
 // A function that fills empty/undefined array elements with zeros
 const fillZero = arr => [...arr].map(el => el ?? 0);
 
+// Set current day to zeros and fill in missing days with zeros
 for (let key in database) {
   let element = database[key];
   if (Array.isArray(element)) {
@@ -41,6 +43,16 @@ for (let key in database) {
     }
   }
 }
+
+// Sum up all arrays in database
+function updateTotal(db) {
+  const total = Object.values(db).filter(el => Array.isArray(el)).reduce((a, c) => a + c.reduce((a, c) => a + c), 0);
+
+  // Show total points
+  document.getElementById('totalDisplay').textContent = total;
+}
+
+updateTotal(database);
 
 // set database text in edit section
 document.getElementById('dbText').textContent = JSON.stringify(database, null, 2);
@@ -150,13 +162,6 @@ const chart = new Chart('myChart', {
   options: options
 });
 
-// // Update data
-// function syncData(chart) {
-//   chart.data.datasets.forEach(dataset => {
-//     dataset.data = database[dataset.id];
-//   });
-//   chart.update();
-// }
 
 document.getElementById('deleteButton').addEventListener('click', () => {
   window.localStorage.clear();
@@ -173,7 +178,7 @@ document.getElementById('saveDB').addEventListener('click', () => {
 // assign function to the 10 adjustment buttons
 [...document.getElementsByClassName('adjuster')].forEach(b => {
   // Situps/Squats, etc.
-  let label = b.parentElement.parentElement.parentElement.querySelector(':nth-child(2)').firstElementChild.textContent;
+  let label = b.parentElement.parentElement.parentElement.children[1].children[0].textContent;
   // change to match the dataset label
   label = {
     'Situps': 'situp',
@@ -189,18 +194,19 @@ document.getElementById('saveDB').addEventListener('click', () => {
   // update database variable
   b.addEventListener('click', () => {
     database[label].push(database[label].pop() + parseInt(val));
+    updateTotal(database);
 
-    // dave database updates to localStorage
-    saveData();
+    // save database updates to localStorage
+    saveData(database);
 
-    //TODO use/manipulate chart data, then save that to localstorage? Utilize chart.update() vs location.reload()
+
     // adjust chart data directly
-    chart.data.datasets.find(ds=>ds.id===label).data = database[label];
+    chart.data.datasets.find(ds => ds.id === label).data = database[label];
     chart.update();
   });
 });
 
 // Save Data
-function saveData() {
-  window.localStorage.setItem('database', JSON.stringify(database));
+function saveData(db) {
+  window.localStorage.setItem('database', JSON.stringify(db));
 }
