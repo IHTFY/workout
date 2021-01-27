@@ -63,6 +63,11 @@ function updateTotal(db) {
     averages[i] = (averages[i - 1] * i + dailyTotals[i]) / (i + 1);
   }
 
+  // TODO
+  // Show how many points to beat average
+  document.getElementById('toBeatAverage').textContent = `${Math.ceil(averages[averages.length - 1] - dailyTotals[daysSince])} to beat average`;
+
+
   // Update editable dbText
   document.getElementById('dbText').textContent = JSON.stringify(database, null, 2);
 
@@ -218,7 +223,6 @@ chart = new Chart('myChart', {
   data: lines,
   options: options
 });
-
 
 // run to sync axes
 updateTotal(database);
