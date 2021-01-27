@@ -63,7 +63,6 @@ function updateTotal(db) {
     averages[i] = (averages[i - 1] * i + dailyTotals[i]) / (i + 1);
   }
 
-  // TODO
   // Show how many points to beat average
   document.getElementById('toBeatAverage').textContent = `${Math.ceil(averages[averages.length - 1] - dailyTotals[daysSince])} to beat average`;
 
@@ -161,7 +160,7 @@ const options = {
   spanGaps: false,
   elements: {
     line: {
-      tension: 0
+      tension: 0.3
     }
   },
   scales: {
