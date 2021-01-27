@@ -9,6 +9,8 @@ document.getElementById('currentDate').textContent = `Today is ${new Date().toLo
 const DATE = new Date();
 const today = [DATE.getFullYear(), DATE.getMonth() + 1, DATE.getDate()].join('-');
 
+let chart;
+
 // Check for stored data on page
 let database = window.localStorage.getItem('database')
   ? JSON.parse(window.localStorage.getItem('database'))
@@ -44,16 +46,31 @@ for (let key in database) {
   }
 }
 
+
+let averages = [];
+let dailyTotals = [];
+
 // Sum up all arrays in database
 function updateTotal(db) {
-  const total = Object.values(db).filter(el => Array.isArray(el)).reduce((a, c) => a + c.reduce((a, c) => a + c), 0);
+  dailyTotals = Object.values(db).filter(el => Array.isArray(el)).reduce((a, c) => a.map((v, i) => v + c[i]));
+  const total = dailyTotals.reduce((a, c) => a + c, 0);
 
   // Show total points
   document.getElementById('totalDisplay').textContent = total;
 
+  averages[0] = dailyTotals[0];
+  for (let i = 1; i < dailyTotals.length; i++) {
+    averages[i] = (averages[i - 1] * i + dailyTotals[i]) / (i + 1);
+  }
+
   // Update editable dbText
   document.getElementById('dbText').textContent = JSON.stringify(database, null, 2);
 
+  // Match average scale to stacked scale
+  if (chart) {
+    chart.options.scales.yAxes[1].ticks.max = chart.scales.stackedAxisY.max;
+    chart.update();
+  }
 }
 
 // Run once to initialize editable dbText
@@ -83,7 +100,8 @@ const lines = {
     hidden: false,
     id: 'situp',
     label: 'Situps',
-    fill: 'origin'
+    fill: 'origin',
+    yAxisID: 'stackedAxisY',
   }, {
     backgroundColor: transparent(colors.orange),
     borderColor: colors.orange,
@@ -91,7 +109,8 @@ const lines = {
     hidden: false,
     id: 'squat',
     label: 'Squats',
-    fill: '-1'
+    fill: '-1',
+    yAxisID: 'stackedAxisY',
   }, {
     backgroundColor: transparent(colors.yellow),
     borderColor: colors.yellow,
@@ -99,7 +118,8 @@ const lines = {
     hidden: false,
     id: 'pushup',
     label: 'Pushups',
-    fill: '-1'
+    fill: '-1',
+    yAxisID: 'stackedAxisY',
   }, {
     backgroundColor: transparent(colors.green),
     borderColor: colors.green,
@@ -107,7 +127,8 @@ const lines = {
     hidden: false,
     id: 'plank',
     label: 'Plank (s)',
-    fill: '-1'
+    fill: '-1',
+    yAxisID: 'stackedAxisY',
   }, {
     backgroundColor: transparent(colors.blue),
     borderColor: colors.blue,
@@ -115,7 +136,18 @@ const lines = {
     hidden: false,
     id: 'pullup',
     label: 'Pullups',
-    fill: '-1'
+    fill: '-1',
+    yAxisID: 'stackedAxisY',
+  },
+  {
+    backgroundColor: '#00000080',
+    borderColor: '#00000080',
+    data: averages,
+    hidden: false,
+    id: 'averages',
+    label: 'Average',
+    fill: 'false',
+    yAxisID: 'unstackedAxisY',
   }]
 };
 
@@ -129,11 +161,21 @@ const options = {
   },
   scales: {
     yAxes: [{
+      id: 'stackedAxisY',
       stacked: true,
       scaleLabel: {
         display: true,
         labelString: 'Points'
       },
+      ticks: {
+        precision: 0,
+        min: 0
+      }
+    },
+    {
+      id: 'unstackedAxisY',
+      stacked: false,
+      display: false,
       ticks: {
         precision: 0,
         min: 0
@@ -158,7 +200,8 @@ const options = {
         return 'Day ' + data.labels[tooltipItems[0].index];
       },
       afterBody: function (tooltipItems, data) {
-        return 'Total: ' + data.datasets.reduce((a, c) => a + c.data[tooltipItems[0].index], 0);
+        return 'Total: ' + dailyTotals[tooltipItems[0].index];
+        // return 'Total: ' + data.datasets.reduce((a, c) => a + c.data[tooltipItems[0].index], 0);
       }
     }
   },
@@ -170,11 +213,15 @@ const options = {
 };
 
 // Draw Chart
-const chart = new Chart('myChart', {
+chart = new Chart('myChart', {
   type: 'line',
   data: lines,
   options: options
 });
+
+
+// run to sync axes
+updateTotal(database);
 
 // Handle Delete Database button
 document.getElementById('deleteButton').addEventListener('click', () => {
