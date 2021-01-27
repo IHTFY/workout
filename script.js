@@ -64,7 +64,10 @@ function updateTotal(db) {
   }
 
   // Show how many points to beat average
-  document.getElementById('toBeatAverage').textContent = `${Math.ceil(averages[averages.length - 1] - dailyTotals[daysSince])} to beat average`;
+  const diff = averages[averages.length - 1] - dailyTotals[daysSince];
+  document.getElementById('compareAverage').textContent = diff > 0
+    ? `${Math.ceil(diff)} to beat average`
+    : `Beat the average by ${-diff}!`;
 
 
   // Update editable dbText
