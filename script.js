@@ -67,7 +67,7 @@ function updateTotal(db) {
   const diff = averages[averages.length - 1] - dailyTotals[daysSince];
   document.getElementById('compareAverage').textContent = diff > 0
     ? `${Math.ceil(diff)} to beat average`
-    : `Beat the average by ${-diff}!`;
+    : `Beat the average by ${Math.floor(-diff)}!`;
 
 
   // Update editable dbText
