@@ -56,7 +56,7 @@ function updateTotal(db) {
   const total = dailyTotals.reduce((a, c) => a + c, 0);
 
   // Show total points
-  document.getElementById('totalDisplay').textContent = total;
+  document.getElementById('totalDisplay').textContent = total.toLocaleString();
 
   averages[0] = dailyTotals[0];
   for (let i = 1; i < dailyTotals.length; i++) {
@@ -66,8 +66,8 @@ function updateTotal(db) {
   // Show how many points to beat average
   const diff = averages[averages.length - 1] - dailyTotals[daysSince];
   document.getElementById('compareAverage').textContent = diff > 0
-    ? `${Math.ceil(diff)} to beat average`
-    : `Beat the average by ${Math.floor(-diff)}!`;
+    ? `${Math.ceil(diff).toLocaleString()} to beat average`
+    : `Beat the average by ${Math.floor(-diff).toLocaleString()}!`;
 
 
   // Update editable dbText
@@ -261,7 +261,7 @@ document.getElementById('saveDB').addEventListener('click', () => {
   // update database variable
   b.addEventListener('click', () => {
     // change database object value
-    database[label].push(database[label].pop() + parseInt(val));
+    database[label].push(Math.max(database[label].pop() + parseInt(val), 0));
     updateTotal(database);
 
     // save database updates to localStorage
