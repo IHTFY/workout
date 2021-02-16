@@ -133,7 +133,7 @@ const lines = {
     data: database.plank,
     hidden: false,
     id: 'plank',
-    label: 'Plank (s)',
+    label: 'Planks',
     fill: '-1',
     yAxisID: 'stackedAxisY',
   }, {
@@ -251,10 +251,10 @@ document.getElementById('saveDB').addEventListener('click', () => {
     'Situps': 'situp',
     'Squats': 'squat',
     'Pushups': 'pushup',
-    'Plank (s)': 'plank',
+    'Planks': 'plank',
     'Pullups': 'pullup',
   }[label];
-
+  
   // '+5' or '-1'
   const val = b.textContent;
 
