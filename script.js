@@ -73,11 +73,12 @@ function updateTotal(db) {
   // Update editable dbText
   document.getElementById('dbText').textContent = JSON.stringify(database, null, 2);
 
-  // Match average scale to stacked scale
-  if (chart) {
-    chart.options.scales.yAxes[1].ticks.max = chart.scales.stackedAxisY.max;
-    chart.update();
-  }
+  // // Match average scale to stacked scale
+  // if (chart) {
+  //   // TODO yAxes removed by 3.0
+  //   chart.options.scales.yAxes[1].ticks.max = chart.scales.stackedAxisY.max;
+  //   chart.update();
+  // }
 }
 
 // Run once to initialize editable dbText
@@ -159,6 +160,7 @@ const lines = {
 };
 
 const options = {
+  responsive: true,
   maintainAspectRatio: false,
   spanGaps: false,
   elements: {
@@ -167,8 +169,7 @@ const options = {
     }
   },
   scales: {
-    yAxes: [{
-      id: 'stackedAxisY',
+    stackedAxisY: {
       stacked: true,
       scaleLabel: {
         display: true,
@@ -179,16 +180,15 @@ const options = {
         min: 0
       }
     },
-    {
-      id: 'unstackedAxisY',
+    unstackedAxisY: {
       stacked: false,
       display: false,
       ticks: {
         precision: 0,
         min: 0
       }
-    }],
-    xAxes: [
+    },
+    x: [
       {
         scaleLabel: {
           display: true,
@@ -196,6 +196,11 @@ const options = {
         }
       }
     ]
+  },
+  plugins: {
+    filler: {
+      propagate: true
+    }
   },
   title: {
     display: true,
@@ -254,7 +259,7 @@ document.getElementById('saveDB').addEventListener('click', () => {
     'Planks': 'plank',
     'Pullups': 'pullup',
   }[label];
-  
+
   // '+5' or '-1'
   const val = b.textContent;
 
