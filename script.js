@@ -74,11 +74,10 @@ function updateTotal(db) {
   document.getElementById('dbText').textContent = JSON.stringify(database, null, 2);
 
   // // Match average scale to stacked scale
-  // if (chart) {
-  //   // TODO yAxes removed by 3.0
-  //   chart.options.scales.yAxes[1].ticks.max = chart.scales.stackedAxisY.max;
-  //   chart.update();
-  // }
+  if (chart) {
+    chart.options.scales['unstackedY'].max = chart.scales['stackedY'].max;
+    chart.update();
+  }
 }
 
 // Run once to initialize editable dbText
@@ -109,7 +108,7 @@ const lines = {
     id: 'situp',
     label: 'Situps',
     fill: 'origin',
-    yAxisID: 'stackedAxisY',
+    yAxisID: 'stackedY',
   }, {
     backgroundColor: transparent(colors.orange),
     borderColor: colors.orange,
@@ -118,7 +117,7 @@ const lines = {
     id: 'squat',
     label: 'Squats',
     fill: '-1',
-    yAxisID: 'stackedAxisY',
+    yAxisID: 'stackedY',
   }, {
     backgroundColor: transparent(colors.yellow),
     borderColor: colors.yellow,
@@ -127,7 +126,7 @@ const lines = {
     id: 'pushup',
     label: 'Pushups',
     fill: '-1',
-    yAxisID: 'stackedAxisY',
+    yAxisID: 'stackedY',
   }, {
     backgroundColor: transparent(colors.green),
     borderColor: colors.green,
@@ -136,7 +135,7 @@ const lines = {
     id: 'plank',
     label: 'Planks',
     fill: '-1',
-    yAxisID: 'stackedAxisY',
+    yAxisID: 'stackedY',
   }, {
     backgroundColor: transparent(colors.blue),
     borderColor: colors.blue,
@@ -145,7 +144,7 @@ const lines = {
     id: 'pullup',
     label: 'Pullups',
     fill: '-1',
-    yAxisID: 'stackedAxisY',
+    yAxisID: 'stackedY',
   },
   {
     backgroundColor: '#00000080',
@@ -155,7 +154,7 @@ const lines = {
     id: 'averages',
     label: 'Average',
     fill: 'false',
-    yAxisID: 'unstackedAxisY',
+    yAxisID: 'unstackedY',
   }]
 };
 
@@ -169,7 +168,7 @@ const options = {
     }
   },
   scales: {
-    stackedAxisY: {
+    stackedY: {
       stacked: true,
       scaleLabel: {
         display: true,
@@ -180,7 +179,7 @@ const options = {
         min: 0
       }
     },
-    unstackedAxisY: {
+    unstackedY: {
       stacked: false,
       display: false,
       ticks: {
@@ -188,14 +187,13 @@ const options = {
         min: 0
       }
     },
-    x: [
-      {
-        scaleLabel: {
-          display: true,
-          labelString: 'Day'
-        }
+    x: {
+      scaleLabel: {
+        display: true,
+        labelString: 'Day'
       }
-    ]
+    }
+
   },
   plugins: {
     filler: {
