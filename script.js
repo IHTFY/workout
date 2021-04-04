@@ -46,7 +46,6 @@ for (let key in database) {
   }
 }
 
-
 let averages = [];
 let dailyTotals = [];
 
@@ -71,7 +70,7 @@ function updateTotal(db) {
 
 
   // Update editable dbText
-  document.getElementById('dbText').textContent = JSON.stringify(database, null, 2);
+  document.getElementById('dbText').textContent = JSON.stringify(database, (k, v) => v instanceof Array ? JSON.stringify(v) : v, 2).replace(/"(\[.*\])"/g, '$1');
 
   // // Match average scale to stacked scale
   if (chart) {
