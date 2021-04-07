@@ -180,10 +180,14 @@ const options = {
     },
     unstackedY: {
       stacked: false,
+      display: false,
       position: 'right',
       scaleLabel: {
         display: true,
         labelString: 'Average'
+      },
+      gridLines: {
+        display: false
       },
       ticks: {
         precision: 0,
