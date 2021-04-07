@@ -6,3 +6,7 @@ body {
 #dbText {
   white-space: pre;
 }
+
+#chartContainer {
+  height: 50vh;
+}
