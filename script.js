@@ -72,7 +72,7 @@ function updateTotal(db) {
   // Update editable dbText
   document.getElementById('dbText').textContent = JSON.stringify(database, (k, v) => v instanceof Array ? JSON.stringify(v) : v, 2).replace(/"(\[.*\])"/g, '$1');
 
-  // // Match average scale to stacked scale
+  // Match average scale to stacked scale
   if (chart) {
     chart.options.scales['unstackedY'].max = chart.scales['stackedY'].max;
     chart.update();
@@ -180,7 +180,11 @@ const options = {
     },
     unstackedY: {
       stacked: false,
-      display: false,
+      position: 'right',
+      scaleLabel: {
+        display: true,
+        labelString: 'Average'
+      },
       ticks: {
         precision: 0,
         min: 0
@@ -257,20 +261,19 @@ document.getElementById('saveDB').addEventListener('click', () => {
     'Pullups': 'pullup',
   }[label];
 
-  // '+5' or '-1'
-  const val = b.textContent;
+  // +5 or -1
+  const val = parseInt(b.textContent);
 
   // update database variable
   b.addEventListener('click', () => {
     // change database object value
-    database[label].push(Math.max(database[label].pop() + parseInt(val), 0));
+    let list = database[label];
+    let lastIndex = list.length - 1;
+    list[lastIndex] = Math.max(list[lastIndex] + val, 0);
     updateTotal(database);
 
     // save database updates to localStorage
     window.localStorage.setItem('database', JSON.stringify(database));
 
-    // adjust chart data directly
-    chart.data.datasets.find(ds => ds.id === label).data = database[label];
-    chart.update();
   });
 });
