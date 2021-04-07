@@ -74,7 +74,11 @@ function updateTotal(db) {
 
   // Match average scale to stacked scale
   if (chart) {
+    var datasets = chart.data.datasets;
+
     chart.options.scales['unstackedY'].max = chart.scales['stackedY'].max;
+    chart.options.scales['unstackedY'].end = chart.scales['stackedY'].end;
+    chart.options.scales['unstackedY'].min = 0;
     chart.update();
   }
 }
@@ -180,7 +184,6 @@ const options = {
     },
     unstackedY: {
       stacked: false,
-      display: false,
       position: 'right',
       scaleLabel: {
         display: true,
