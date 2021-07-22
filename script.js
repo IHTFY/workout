@@ -111,6 +111,7 @@ const lines = {
     label: 'Situps',
     fill: 'origin',
     yAxisID: 'stackedY',
+    pointStyle: 'circle',
   }, {
     backgroundColor: transparent(colors.orange),
     borderColor: colors.orange,
@@ -120,6 +121,7 @@ const lines = {
     label: 'Squats',
     fill: '-1',
     yAxisID: 'stackedY',
+    pointStyle: 'circle',
   }, {
     backgroundColor: transparent(colors.yellow),
     borderColor: colors.yellow,
@@ -129,6 +131,7 @@ const lines = {
     label: 'Pushups',
     fill: '-1',
     yAxisID: 'stackedY',
+    pointStyle: 'circle',
   }, {
     backgroundColor: transparent(colors.green),
     borderColor: colors.green,
@@ -138,6 +141,7 @@ const lines = {
     label: 'Planks',
     fill: '-1',
     yAxisID: 'stackedY',
+    pointStyle: 'circle',
   }, {
     backgroundColor: transparent(colors.blue),
     borderColor: colors.blue,
@@ -147,6 +151,7 @@ const lines = {
     label: 'Pullups',
     fill: '-1',
     yAxisID: 'stackedY',
+    pointStyle: 'circle',
   },
   {
     backgroundColor: '#00000080',
@@ -157,6 +162,7 @@ const lines = {
     label: 'Average',
     fill: 'false',
     yAxisID: 'unstackedY',
+    pointStyle: 'circle',
   }]
 };
 
@@ -208,26 +214,26 @@ const options = {
   plugins: {
     filler: {
       propagate: true
-    }
-  },
-  title: {
-    display: true,
-    text: 'Points per Day'
-  },
-  tooltips: {
-    callbacks: {
-      title: function (tooltipItems, data) {
-        return 'Day ' + data.labels[tooltipItems[0].index];
-      },
-      afterBody: function (tooltipItems, data) {
-        return 'Total: ' + dailyTotals[tooltipItems[0].index];
-        // return 'Total: ' + data.datasets.reduce((a, c) => a + c.data[tooltipItems[0].index], 0);
+    },
+    legend: {
+      labels: {
+        usePointStyle: true
       }
-    }
-  },
-  legend: {
-    labels: {
-      usePointStyle: true
+    },
+    title: {
+      display: true,
+      text: 'Points per Day'
+    },
+    tooltip: {
+      callbacks: {
+        title: function (tooltipItems, data) {
+          return 'Day ' + (1 + tooltipItems[0].dataIndex);
+        },
+        footer: function (tooltipItems) {
+          return 'Total: ' + dailyTotals[tooltipItems[0].dataIndex];
+          // return 'Total: ' + data.datasets.reduce((a, c) => a + c.data[tooltipItems[0].index], 0);
+        }
+      }
     }
   }
 };
