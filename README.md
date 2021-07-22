@@ -42,8 +42,6 @@ Don't worry if you miss some days, just try to beat the average!
 
 Click on the legend items to show and hide the corresponding lines.
 
-> Note: The average line doesn't adjust when the y-axis scale changes
-
 ![Toggle Lines](./gifs/toggle.gif)
 
 ---
