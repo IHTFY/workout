@@ -10,3 +10,18 @@ body {
 #chartContainer {
   height: 50vh;
 }
+
+@property --num {
+  syntax: "<integer>";
+  initial-value: 0;
+  inherits: false;
+}
+
+.animated-number {
+  transition: --num 0.5s;
+  counter-set: num var(--num);
+}
+
+.animated-number::after {
+  content: counter(num);
+}
