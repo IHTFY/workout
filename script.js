@@ -55,7 +55,8 @@ function updateTotal(db) {
   const total = dailyTotals.reduce((a, c) => a + c, 0);
 
   // Show total points
-  document.getElementById('totalDisplay').textContent = total.toLocaleString();
+  // document.getElementById('totalDisplay').textContent = total.toLocaleString();
+  document.getElementById('totalDisplay').style.setProperty('--num', total);
 
   averages[0] = dailyTotals[0];
   for (let i = 1; i < dailyTotals.length; i++) {
